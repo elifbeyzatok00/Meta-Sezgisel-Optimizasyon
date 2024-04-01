@@ -1,7 +1,11 @@
 # Meta-Sezgisel-Optimizasyon (Meta-Heuristic-Optimization)
 
 
-➡️Kodları çalıştırmak için [Online Matlab](https://matlab.mathworks.com/) kullanabilirsiniz
+➡️Kodları çalıştırmak için online aşağıdaki online compilerları kullanabilirsiniz:
+* [Online Matlab](https://matlab.mathworks.com/)
+* [Online Python Compiler](https://www.programiz.com/python-programming/online-compiler/)
+
+
 ### Homerworks
 
 
@@ -199,5 +203,136 @@ Output:
 ![image](https://github.com/elifbeyzatok00/Meta-Sezgisel-Optimizasyon/assets/102792446/fd60ce0e-45ef-40ed-b4ea-15f3091b0976)
 
 - [ ]  Binary kodlama + sezgisel alg ile future selection yani özellik seçimi gerçekleştir
+      
+Özellik seçimi (feature selection) işlemi, bir veri kümesindeki en önemli özellikleri belirleyerek gereksiz özelliklerden kurtulmayı amaçlar. Bu, modelin daha iyi performans göstermesini sağlar, aynı zamanda hesaplama yükünü azaltır ve modelin genelleme yeteneğini artırır. Binary kodlama ve sezgisel algoritmalar, özellik seçimi için kullanılabilecek yöntemlerden bazılarıdır. İşte bu iki yöntemin birleştirilerek özellik seçimi yapılmasını sağlayacak bir yaklaşım:
+
+1. **Veri Hazırlığı**: İlk adım, veri kümesini temizlemek ve uygun formata getirmektir. Eksik verileri doldurmak, kategorik verileri sayısal forma dönüştürmek gibi adımlar bu aşamada gerçekleştirilir.
+
+2. **Binary Kodlama**: Kategorik özellikler, modelin işleyebileceği sayısal formata dönüştürülür. Bu adımda, One-Hot Encoding gibi teknikler kullanılabilir.
+
+3. **Sezgisel Algoritma Seçimi**: Özellik seçimi için bir sezgisel algoritma seçmek gerekir. Genetik algoritma, sürü optimizasyonu, parçacık sürüsü optimizasyonu gibi algoritmalar kullanılabilir. Bu algoritmalardan birini seçmek, özelliklerin optimize edilmesine ve en iyi kombinasyonun bulunmasına yardımcı olur.
+
+4. **Özellik Seçimi**: Seçilen sezgisel algoritmayı kullanarak en iyi özellik kombinasyonunu belirle. Bu adımda, algoritmanın özellik seçiminde hangi kriterleri değerlendireceği belirlenir. Örneğin, en yüksek doğruluk sağlayan özellik kombinasyonunu seçebilirsiniz.
+
+5. **Model Eğitimi ve Değerlendirme**: Seçilen özelliklerle bir model oluşturun ve eğitin. Daha sonra, bu modeli doğrulamak için ayrılmış bir test veri kümesi üzerinde değerlendirin. Modelin performansını ölçmek için uygun metrikleri kullanın (doğruluk, hassasiyet, geri çağırma vb.).
+
+6. **Gerekirse İterasyon**: Modelin performansını artırmak için gerekiyorsa adımları tekrarlayın. Farklı sezgisel algoritmaları veya farklı parametre ayarlarını deneyebilirsiniz.
+
+Bu adımları takip ederek, binary kodlama ve sezgisel algoritmaları birleştirerek veri kümesindeki en önemli özellikleri seçebilir ve daha iyi bir model elde edebilirsiniz. Bu süreç, veri setinize ve probleminize bağlı olarak farklılık gösterebilir, bu nedenle deneme yanılma yöntemini kullanarak en iyi sonuçları elde etmek önemlidir.
+
+Örnek_python:
+Bu örnek, özellik seçimi için bir genetik algoritma kullanır. Kod, özellik seçimini gerçekleştirmek için scikit-learn kütüphanesini ve genetik algoritma için DEAP kütüphanesini kullanır.
+
+```python
+import numpy as np
+from sklearn.datasets import make_classification
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
+from deap import base, creator, tools, algorithms
+
+# Örnek veri kümesi oluşturma
+X, y = make_classification(n_samples=1000, n_features=20, n_classes=2, random_state=42)
+
+# Veri kümesini eğitim ve test olarak bölmek
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Fitness fonksiyonu - doğruluk
+def evaluate(individual, X, y):
+    selected_features = [bool(i) for i in individual]
+    X_selected = X[:, selected_features]
+    clf = RandomForestClassifier(n_estimators=100, random_state=42)
+    clf.fit(X_selected, y)
+    y_pred = clf.predict(X_selected)
+    return accuracy_score(y, y_pred),
+
+# Genetik algoritma için tanımlamalar
+creator.create("FitnessMax", base.Fitness, weights=(1.0,))
+creator.create("Individual", list, fitness=creator.FitnessMax)
+
+toolbox = base.Toolbox()
+toolbox.register("attr_bool", np.random.choice, [0, 1])
+toolbox.register("individual", tools.initRepeat, creator.Individual, toolbox.attr_bool, n=len(X[0]))
+toolbox.register("population", tools.initRepeat, list, toolbox.individual)
+toolbox.register("mate", tools.cxTwoPoint)
+toolbox.register("mutate", tools.mutFlipBit, indpb=0.05)
+toolbox.register("select", tools.selTournament, tournsize=3)
+toolbox.register("evaluate", evaluate, X=X_train, y=y_train)
+
+# Genetik algoritma parametreleri
+population_size = 50
+num_generations = 10
+
+pop = toolbox.population(n=population_size)
+algorithms.eaSimple(pop, toolbox, cxpb=0.5, mutpb=0.2, ngen=num_generations, verbose=True)
+
+# En iyi bireyin seçilmesi
+best_individual = tools.selBest(pop, k=1)[0]
+selected_features = [bool(i) for i in best_individual]
+
+# En iyi özelliklerin kullanılmasıyla modelin eğitilmesi ve test edilmesi
+X_train_selected = X_train[:, selected_features]
+X_test_selected = X_test[:, selected_features]
+clf = RandomForestClassifier(n_estimators=100, random_state=42)
+clf.fit(X_train_selected, y_train)
+y_pred = clf.predict(X_test_selected)
+
+# Test verisi üzerinde modelin değerlendirilmesi
+accuracy = accuracy_score(y_test, y_pred)
+print("Test accuracy with selected features:", accuracy)
+```
+
+Bu kod, scikit-learn kütüphanesini kullanarak bir sınıflandırma veri seti oluşturur, genetik algoritmayı kullanarak özellik seçimini gerçekleştirir ve ardından seçilen özelliklerle bir RandomForestClassifier modeli eğitir. Son olarak, modelin test veri seti üzerindeki performansını değerlendirir ve doğruluğu yazdırır.
+ 
+Output:
+-
+
+Örnek_matlab:
+Aynı işlemi MATLAB'da da gerçekleştirebiliriz. MATLAB'da genetik algoritma için özel bir araç olan Global Optimization Toolbox'un `ga` fonksiyonunu kullanabiliriz. İşte MATLAB kodu:
+
+```matlab
+% Örnek veri kümesi oluşturma
+rng(42); % Tekrarlanabilirlik için rastgele tohumu ayarla
+X = randn(1000, 20); % 1000 örnek, 20 özellik
+y = randi([0 1], 1000, 1); % 0 ve 1 sınıfları arasında rastgele etiketler
+
+% Veri kümesini eğitim ve test olarak bölmek
+cv = cvpartition(y, 'Holdout', 0.2);
+X_train = X(cv.training,:);
+y_train = y(cv.training,:);
+X_test = X(cv.test,:);
+y_test = y(cv.test,:);
+
+% Fitness fonksiyonu - doğruluk
+fitnessFunc = @(individual) evaluate(individual, X_train, y_train);
+
+function accuracy = evaluate(individual, X, y)
+    selected_features = logical(individual);
+    X_selected = X(:, selected_features);
+    mdl = fitensemble(X_selected, y, 'Bag', 100, 'Tree', 'Type', 'Classification');
+    y_pred = predict(mdl, X_selected);
+    accuracy = sum(y_pred == y) / numel(y);
+end
+
+% Genetik algoritma parametreleri
+numFeatures = size(X, 2);
+opts = gaoptimset('PopulationSize', 50, 'Generations', 10, 'CrossoverFraction', 0.5, 'MutationFcn', {@mutationuniform, 0.05});
+[selected_features, ~] = ga(fitnessFunc, numFeatures, opts);
+
+% Seçilen özelliklerin kullanılmasıyla modelin eğitilmesi ve test edilmesi
+X_train_selected = X_train(:, selected_features);
+X_test_selected = X_test(:, selected_features);
+mdl = fitensemble(X_train_selected, y_train, 'Bag', 100, 'Tree', 'Type', 'Classification');
+y_pred = predict(mdl, X_test_selected);
+
+% Test verisi üzerinde modelin değerlendirilmesi
+accuracy = sum(y_pred == y_test) / numel(y_test);
+fprintf('Test accuracy with selected features: %.2f%%\n', accuracy * 100);
+```
+
+Bu MATLAB kodu, öncelikle bir veri seti oluşturur, ardından genetik algoritmayı kullanarak özellik seçimini gerçekleştirir ve en iyi özellik kombinasyonunu seçer. Son olarak, seçilen özelliklerle bir sınıflandırma modeli eğitir ve test veri seti üzerinde performansını değerlendirir.
+
+Output:
+-
       
 - [ ]  Yapay zeka alg ve nasıl çalıştıklarına detaylıca bak. Özellikle k-nn, arama ağacına ve sezgisel alg. (Binary) bak
