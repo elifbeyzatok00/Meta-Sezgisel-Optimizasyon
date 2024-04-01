@@ -1,5 +1,5 @@
-# Meta-Sezgisel-Optimizasyon
-Meta-Heuristic-Optimization
+# Meta-Sezgisel-Optimizasyon (Meta-Heuristic-Optimization)
+
 
 ➡️Kodları çalıştırmak için [Online Matlab](https://matlab.mathworks.com/) kullanabilirsiniz
 ### Homerworks
@@ -125,7 +125,7 @@ end
 Bu kod, belirli sayıda şehir ve koordinatlarla başlayarak genetik algoritmayı kullanarak gezgin satıcı problemi çözer. Kodun çalışması için MATLAB ortamında çalıştırılması gerekmektedir. Bu kodda, genetik algoritmanın her bir neslinde, seçim, çaprazlama ve mutasyon adımları gerçekleştirilir. Bu adımlar genetik algoritmanın temel bileşenleridir ve gezgin satıcı problemi için uygulanırlar.
 
 Output:
-![image](https://github.com/elifbeyzatok00/Meta-Sezgisel-Optimizasyon/assets/102792446/fd60ce0e-45ef-40ed-b4ea-15f3091b0976)
+![image](https://github.com/elifbeyzatok00/Meta-Sezgisel-Optimizasyon/assets/102792446/9e8150b8-b0ef-466d-8e9f-4a3ceca9618e)
 
 ### Solution2:
 ## Gezgin Satıcı Problemini MATLAB'da Çözümleme
@@ -196,6 +196,8 @@ disp(['En kısa mesafe:', num2str(bestDistance)]);
 * MATLAB Optimizasyon Araç Kutusu: [https://www.mathworks.com/products/optimization.html](https://www.mathworks.com/products/optimization.html)
 
 Output:
+![image](https://github.com/elifbeyzatok00/Meta-Sezgisel-Optimizasyon/assets/102792446/fd60ce0e-45ef-40ed-b4ea-15f3091b0976)
 
 - [ ]  Binary kodlama + sezgisel alg ile future selection yani özellik seçimi gerçekleştir
+      
 - [ ]  Yapay zeka alg ve nasıl çalıştıklarına detaylıca bak. Özellikle k-nn, arama ağacına ve sezgisel alg. (Binary) bak
