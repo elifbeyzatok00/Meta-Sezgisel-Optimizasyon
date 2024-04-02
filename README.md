@@ -389,6 +389,7 @@ Random Forest, bir ensemble (topluluk) öğrenme algoritmasıdır ve karar ağa�
 Bu adımlar, Random Forest'ın her bir karar ağacını eğitme ve sonuçları birleştirme sürecini tanımlar.
 
 Sezgisel Algoritmalar nedir, nasıl çalışır?
+
 Sezgisel algoritmalar, doğal fenomenlerden, insan davranışlarından veya diğer karmaşık sistemlerden esinlenerek tasarlanan ve problem çözme sürecinde sezgi veya deneme-yanılma yöntemlerini kullanan algoritmalardır. Bu algoritmalar, bilgisayar biliminde ve yapay zekâ alanında geniş bir kullanım alanına sahiptirler. Birçok sezgisel algoritma, problemi optimize etmeye veya bir çözüm alanında arama yapmaya odaklanır.
 
 Sezgisel algoritmaların genel çalışma prensibi, doğal süreçlerden veya davranışlardan esinlenerek çözüm alanında potansiyel çözümleri aramaktır. Bu çözümler, genellikle bir uygunluk fonksiyonu tarafından değerlendirilir ve en iyi çözüm, bu fonksiyona göre seçilir. İşte bazı popüler sezgisel algoritma türleri:
@@ -407,6 +408,7 @@ Bu sezgisel algoritmalar, optimizasyon problemlerini çözmek, veri madenciliği
 
 
 Sezgisel Algoritmalar (Binary) nedir, nasıl çalışır?
+
 Sezgisel algoritmalar, problem çözme sürecinde sezgi veya deneme-yanılma yöntemlerini kullanarak çözüm alanında arama yapmak için tasarlanmış bir tür algoritmadır. Bu algoritmalar, birçok farklı alanda kullanılabilir, özellikle karmaşık ve zorlu optimizasyon problemlerini çözmek için yaygın olarak kullanılırlar.
 
 Sezgisel algoritmaların bir türü olan Binary Sezgisel Algoritmalar (BSA), genellikle karmaşık ve çok boyutlu bir arama alanında optimal bir çözümü bulmak için kullanılır. Bu algoritma, bir dizi bit dizgesi kullanarak çözüm alanını temsil eder. Her bir bit, bir çözümün bir parçasını temsil eder.
