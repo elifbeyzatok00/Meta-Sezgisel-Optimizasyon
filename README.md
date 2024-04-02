@@ -202,6 +202,7 @@ disp(['En kısa mesafe:', num2str(bestDistance)]);
 Output:
 ![image](https://github.com/elifbeyzatok00/Meta-Sezgisel-Optimizasyon/assets/102792446/fd60ce0e-45ef-40ed-b4ea-15f3091b0976)
 
+
 - [ ]  Binary kodlama + sezgisel alg ile future selection yani özellik seçimi gerçekleştir
       
 Özellik seçimi (feature selection) işlemi, bir veri kümesindeki en önemli özellikleri belirleyerek gereksiz özelliklerden kurtulmayı amaçlar. Bu, modelin daha iyi performans göstermesini sağlar, aynı zamanda hesaplama yükünü azaltır ve modelin genelleme yeteneğini artırır. Binary kodlama ve sezgisel algoritmalar, özellik seçimi için kullanılabilecek yöntemlerden bazılarıdır. İşte bu iki yöntemin birleştirilerek özellik seçimi yapılmasını sağlayacak bir yaklaşım:
@@ -283,9 +284,11 @@ print("Test accuracy with selected features:", accuracy)
 ```
 
 Bu kod, scikit-learn kütüphanesini kullanarak bir sınıflandırma veri seti oluşturur, genetik algoritmayı kullanarak özellik seçimini gerçekleştirir ve ardından seçilen özelliklerle bir RandomForestClassifier modeli eğitir. Son olarak, modelin test veri seti üzerindeki performansını değerlendirir ve doğruluğu yazdırır.
- 
+
+<!--
 Output:
 -
+-->
 
 Örnek_matlab:
 Aynı işlemi MATLAB'da da gerçekleştirebiliriz. MATLAB'da genetik algoritma için özel bir araç olan Global Optimization Toolbox'un `ga` fonksiyonunu kullanabiliriz. İşte MATLAB kodu:
@@ -332,7 +335,98 @@ fprintf('Test accuracy with selected features: %.2f%%\n', accuracy * 100);
 
 Bu MATLAB kodu, öncelikle bir veri seti oluşturur, ardından genetik algoritmayı kullanarak özellik seçimini gerçekleştirir ve en iyi özellik kombinasyonunu seçer. Son olarak, seçilen özelliklerle bir sınıflandırma modeli eğitir ve test veri seti üzerinde performansını değerlendirir.
 
+<!--
 Output:
 -
+-->
       
 - [ ]  Yapay zeka alg ve nasıl çalıştıklarına detaylıca bak. Özellikle k-nn, arama ağacına ve sezgisel alg. (Binary) bak
+K-nn nedir, nasıl çalışır?
+
+K-nearest neighbors (K-NN), bir sınıflandırma veya regresyon probleminde kullanılan basit bir makine öğrenimi algoritmasıdır. Temel prensibi, bir veri noktasını sınıflandırmak veya tahmin etmek için en yakınındaki K sayıda eğitim örneğine bakmaktır. K-NN, genellikle basit ama etkili bir şekilde çalışır ve çeşitli uygulamalarda kullanılabilir.
+
+K-NN nasıl çalışır:
+Elbette, işte K-NN algoritmasının daha detaylı adımları:
+
+1. **Veri Kümesinin Hazırlanması:**
+   - İlk adım veri kümesinin hazırlanmasıdır. Bu veri kümesi, özellikler ve bu özelliklere karşılık gelen hedef değişkenlerden oluşur. Örneğin, bir ev fiyatı tahmin etmek istiyorsak, özellikler evin metrekareleri, oda sayısı, konumu vb. olabilir.
+
+2. **Normalizasyon veya Standartlaştırma:**
+   - Özellikler arasındaki değer aralıkları farklı olabilir. Bu nedenle, normalizasyon veya standartlaştırma gibi işlemlerle özellik değerlerini aynı ölçekte tutmak önemlidir. Bu adım, veri ön işleme sürecinin bir parçasıdır.
+
+3. **K Değerinin Seçilmesi:**
+   - K-NN algoritmasında, K parametresi komşu sayısını belirtir. Bu parametrenin doğru bir şekilde seçilmesi önemlidir. Genellikle, K değeri tek sayılar arasından seçilir (çift sayılar için çoğunluk oylamasında bağlanma riskini azaltmak için).
+
+4. **Mesafe Ölçümü:**
+   - K-NN'de, genellikle kullanılan mesafe ölçümleri Öklid mesafesi veya Manhattan mesafesi gibi yöntemlerdir. Öklid mesafesi en yaygın olarak kullanılan mesafe ölçüsüdür.
+
+5. **Test Verilerinin Sınıflandırılması veya Tahmini:**
+   - Sınıflandırma için: Test verisi noktasının her eğitim veri noktasıyla arasındaki mesafeler hesaplanır ve en yakın K komşular seçilir. Ardından, bu komşuların sınıfları incelenir ve test veri noktası bu komşuların sınıfları arasında çoğunluk oylaması ile sınıflandırılır.
+   - Regresyon için: Test veri noktasının her eğitim veri noktasıyla arasındaki mesafeler hesaplanır ve en yakın K komşular seçilir. Ardından, bu komşuların hedef değişken değerlerinin ortalaması alınarak test veri noktasının tahmini değeri hesaplanır.
+
+6. **Sonuçların Değerlendirilmesi:**
+   - Algoritmanın performansını değerlendirmek için genellikle doğruluk, hassasiyet, geri çağırma, ortalama kare hata (MSE) gibi metrikler kullanılır. Bu metrikler, algoritmanın ne kadar iyi çalıştığını anlamak için kullanılır.
+
+Bu adımları takip ederek K-NN algoritmasıyla bir sınıflandırma veya regresyon problemi çözebilirsiniz. Ancak, doğru K değeri seçimi, mesafe ölçümü gibi faktörlerin seçimi ve veri kümesinin kalitesi gibi birçok faktör algoritmanın başarısını etkileyebilir.
+
+Arama ağaçları, karar ağaçları, random forest nedir ve aşamaları nelerdir?
+Arama ağaçları, karar ağaçları ve Random Forest, farklı kavramlardır ve her biri farklı amaçlar için kullanılan farklı algoritmalardır.
+
+1. **Arama Ağaçları (Search Trees)**:
+Arama ağaçları, genellikle veri yapıları olarak kullanılır ve veri elemanlarının hızlı bir şekilde aranmasını sağlar. En popüler örneği ikili arama ağaçlarıdır. İkili arama ağacı, her düğümün en fazla iki çocuğu olan bir ağaç yapısıdır. Temel işlevi, bir elemanın varlığını hızlı bir şekilde kontrol etmek ve sıralı bir şekilde saklanmış veri elemanlarını tutmaktır. Ağaç, genellikle soldan sağa sıralıdır ve herhangi bir düğüm, sol alt ağaçtaki tüm elemanlardan daha büyük ve sağ alt ağaçtaki tüm elemanlardan daha küçüktür. Ayrıca, arama ağaçları, öğe ekleme, arama ve silme gibi temel işlemleri gerçekleştirmek için kullanılır.
+
+2. **Karar Ağaçları (Decision Trees)**:
+Karar ağaçları, sınıflandırma ve regresyon problemleri için kullanılan bir makine öğrenimi tekniğidir. Veri kümesinin belirli özelliklerine dayanarak bir hedef değişkeni tahmin etmek için kullanılır. Karar ağaçları, bir kök düğümden başlar ve her iç düğüm, bir özellikle ilişkilendirilmiş bir karar kuralını temsil eder. Her bir dal, bir özellik değerine göre ayrılır ve sonuç olarak bir yaprak düğümünde bir tahmin veya karar verilir. Karar ağaçları, veri setindeki karmaşık ilişkileri modellemek için kullanılabilir ve kolayca yorumlanabilirler.
+
+3. **Random Forest**:
+Random Forest, bir ensemble (topluluk) öğrenme algoritmasıdır ve karar ağaçlarının bir araya gelmesiyle oluşur. Her bir karar ağacı rastgele örnekleme ve rastgele özellik seçimi teknikleri kullanılarak eğitilir. Random Forest, sınıflandırma ve regresyon problemleri için kullanılabilir ve genellikle overfitting (aşırı uyum) problemlerini azaltmak için kullanılır. Aşağıda Random Forest'ın ana adımları verilmiştir:
+
+   - Veri örnekleme (Bootstrap sampling)
+   - Özellik seçimi (Feature selection)
+   - Karar ağaçlarının oluşturulması (Tree building)
+   - Tahmin (Prediction)
+
+Bu adımlar, Random Forest'ın her bir karar ağacını eğitme ve sonuçları birleştirme sürecini tanımlar.
+
+Sezgisel Algoritmalar nedir, nasıl çalışır?
+Sezgisel algoritmalar, doğal fenomenlerden, insan davranışlarından veya diğer karmaşık sistemlerden esinlenerek tasarlanan ve problem çözme sürecinde sezgi veya deneme-yanılma yöntemlerini kullanan algoritmalardır. Bu algoritmalar, bilgisayar biliminde ve yapay zekâ alanında geniş bir kullanım alanına sahiptirler. Birçok sezgisel algoritma, problemi optimize etmeye veya bir çözüm alanında arama yapmaya odaklanır.
+
+Sezgisel algoritmaların genel çalışma prensibi, doğal süreçlerden veya davranışlardan esinlenerek çözüm alanında potansiyel çözümleri aramaktır. Bu çözümler, genellikle bir uygunluk fonksiyonu tarafından değerlendirilir ve en iyi çözüm, bu fonksiyona göre seçilir. İşte bazı popüler sezgisel algoritma türleri:
+
+1. **Genetik Algoritmalar (Genetic Algorithms - GA)**: Evrimsel teoriden esinlenen bu algoritma, bir popülasyonu çeşitli çözümlerle temsil eder ve doğal seçilim, çaprazlama ve mutasyon operatörleri kullanarak daha iyi çözümleri üretmek için iteratif bir süreç uygular.
+
+2. **Parçacık Sürü Optimizasyonu (Particle Swarm Optimization - PSO)**: Kuş sürüsü veya bal arısı kolonisi gibi doğal organizmaların davranışlarından esinlenen PSO, bir çözüm alanındaki olası çözümleri birer parçacık olarak temsil eder ve bu parçacıklar, en iyi çözümü bulmak için birbirleriyle etkileşirler.
+
+3. **Karınca Kolonisi Optimizasyonu (Ant Colony Optimization - ACO)**: Karıncaların yiyecek kaynaklarını bulmak için kullandığı iz sürme davranışından esinlenen ACO, problem alanında birçok olası çözümü keşfetmek için bir koloni yaklaşımı kullanır ve izler boyunca feromon izlerini güncelleyerek en iyi çözüme ulaşmaya çalışır.
+
+4. **Simüle Edilen Tavlama (Simulated Annealing)**: Metal işleme sanayisindeki ısıtma ve soğutma süreçlerinden esinlenen bu algoritma, olası çözümleri kabul etme olasılığına dayalı olarak hareket eder ve sıcaklık parametresini yavaşça azaltarak çözüm alanında daha iyi bir çözüm arar.
+
+5. **Yapay Arı Kolonisi Algoritması (Artificial Bee Colony Algorithm - ABC)**: Bal arıları tarafından yiyecek kaynaklarını bulmak için kullanılan davranışlardan esinlenen ABC, bir çözüm alanında olası çözümleri keşfetmek için bir arı kolonisi yaklaşımı kullanır.
+
+Bu sezgisel algoritmalar, optimizasyon problemlerini çözmek, veri madenciliği, yapay sinir ağları eğitimi, oyun stratejileri geliştirme ve daha pek çok alanda kullanılabilirler. Her bir algoritmanın kendine özgü avantajları, dezavantajları ve kullanım alanları vardır; bu nedenle, belirli bir probleme en uygun olanı seçmek önemlidir.
+
+
+Sezgisel Algoritmalar (Binary) nedir, nasıl çalışır?
+Sezgisel algoritmalar, problem çözme sürecinde sezgi veya deneme-yanılma yöntemlerini kullanarak çözüm alanında arama yapmak için tasarlanmış bir tür algoritmadır. Bu algoritmalar, birçok farklı alanda kullanılabilir, özellikle karmaşık ve zorlu optimizasyon problemlerini çözmek için yaygın olarak kullanılırlar.
+
+Sezgisel algoritmaların bir türü olan Binary Sezgisel Algoritmalar (BSA), genellikle karmaşık ve çok boyutlu bir arama alanında optimal bir çözümü bulmak için kullanılır. Bu algoritma, bir dizi bit dizgesi kullanarak çözüm alanını temsil eder. Her bir bit, bir çözümün bir parçasını temsil eder.
+
+BSA'nın çalışma prensibi genellikle şu adımları içerir:
+
+1. **Başlangıç Popülasyonunun Oluşturulması**: İlk adımda, rastgele veya belirli bir yöntemle başlangıç popülasyonu oluşturulur. Bu popülasyon, problem alanındaki olası çözümleri temsil eden bit dizgelerinden oluşur.
+
+2. **Uygunluk Fonksiyonunun Hesaplanması**: Her bir çözüm için uygunluk fonksiyonu hesaplanır. Uygunluk fonksiyonu, bir çözümün ne kadar iyi olduğunu ölçen bir metrik veya objektif fonksiyondur. Bu fonksiyon, problemle ilgili özel gereksinimlere bağlı olarak belirlenir.
+
+3. **Seçim**: Seçim operatörü, popülasyon içinden uygunluklarına göre çözümleri seçer. Daha iyi uygunluk değerlerine sahip çözümler, bir sonraki nesle aktarılacak olan bireyler olarak seçilir.
+
+4. **Çaprazlama (Crossover)**: Seçilen çözümler, çaprazlama operatörü kullanılarak yeni çözümler oluşturmak için birleştirilir. Bu adım, genellikle iki veya daha fazla çözümün bit dizgeleri üzerinde gerçekleştirilir. Bu, potansiyel olarak daha iyi çözümlerin keşfedilmesini sağlar.
+
+5. **Mutasyon**: Mutasyon operatörü, popülasyon içindeki çözümlerin çeşitliliğini artırmak için kullanılır. Rastgele seçilen bitlerin değerleri, rastgele olarak değiştirilir. Bu, yeni ve potansiyel olarak daha iyi çözümlerin keşfedilmesine yardımcı olur.
+
+6. **Yeni Popülasyonun Oluşturulması**: Seçim, çaprazlama ve mutasyon adımlarının ardından yeni bir popülasyon oluşturulur. Bu popülasyon, bir sonraki nesil için potansiyel çözümleri temsil eder.
+
+7. **Durma Koşulunun Kontrol Edilmesi**: Belirli bir durma koşulu sağlanıncaya kadar adımlar tekrarlanır. Bu koşul genellikle belirli bir iterasyon sayısına veya bir çözüm kalitesine ulaşıldığında gerçekleşir.
+
+8. **En İyi Çözümün Seçilmesi**: Son olarak, en iyi uygunluğa sahip çözüm, problem için bir yaklaşım olarak seçilir.
+
+BSA, çeşitli optimizasyon problemlerini çözmek için kullanılabilir. Bunlar, genetik algoritmalar (GA), parçacık sürü optimizasyonu (PSO) ve karınca kolonisi optimizasyonu (ACO) gibi diğer sezgisel algoritmalarla karşılaştırılabilir.
